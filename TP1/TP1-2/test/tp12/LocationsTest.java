@@ -3,13 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp1;
+package tp12;
 
+import tp12.Periode;
+import tp12.Locations;
+import tp12.Genre;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tp12.Genre;
+import tp12.Locations;
+import tp12.Periode;
 import static org.junit.Assert.*;
 
 /**

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp1;
+package tp12;
 
 import java.util.*;
 
@@ -82,6 +82,7 @@ public class Location {
         for (Periode p : reservations) {
             corp += "\n" + p.toString();
         }
+        corp +="\n";
         return sep + corp + sep;
     }
 }
