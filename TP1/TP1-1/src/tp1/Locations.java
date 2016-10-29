@@ -7,6 +7,7 @@ package tp1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -72,5 +73,17 @@ public class Locations {
         locations.stream().filter((loc) -> (loc.getLieu().equals(lieu))).forEachOrdered((loc) -> {
             loc.annulerReservation(p);
         });
+    }
+
+    public Location findLocation(String lieu) {
+        try {
+            return locations
+                    .stream()
+                    .filter((loc) -> (loc.getLieu().equals(lieu)))
+                    .findFirst()
+                    .get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 }
