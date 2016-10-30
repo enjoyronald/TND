@@ -130,8 +130,24 @@ public class RequetteManager {
                         lieu = input.readLine();
                         envoyerMessage(" - Type : ");
                         genre = demanderGenre();
-                        envoyerMessage(locManager.afficherTarif(lieu,genre));
+                        envoyerMessage(locManager.afficherTarif(lieu, genre));
                         input.readLine();
+                        break;
+                    case "8":
+                        envoyerMessage("Verifier reservation :\n"
+                                + " - Lieu : ");
+                        lieu = input.readLine();
+                        envoyerMessage(" - Date arrivee : ");
+                        arrivee = demanderDate();
+                        envoyerMessage(" - Date depart : ");
+                        depart = demanderDate();
+                         {
+                            try {
+                                envoyerMessage(locManager.verifierLocationPeriode(lieu, new Periode(arrivee, depart)) ? "Vrai  " : "Faux");
+                                input.readLine();
+                            } catch (ParseException ex) {
+                            }
+                        }
                         break;
                     default:
                         envoyerMessage("Commande incorrecte");
@@ -163,6 +179,7 @@ public class RequetteManager {
         menu += "   5) Ajouter une reservation\n";
         menu += "   6) supprimer une reservation\n";
         menu += "   7) afficher tarif location\n";
+        menu += "   8) Verifier si une reservation a étée faite\n";
         menu += "\n";
         menu += "Votre choix : ";
         return menu;

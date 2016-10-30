@@ -76,10 +76,19 @@ public class Locations {
     }
 
     public boolean deleteLocationPeriode(String lieu, Periode p) {
-        for(Location loc : locations){
-            if(loc.getLieu().equals(lieu)){
+        for (Location loc : locations) {
+            if (loc.getLieu().equals(lieu)) {
                 loc.getReservations().remove(p);
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verifierLocationPeriode(String lieu, Periode p) {
+        for (Location loc : locations) {
+            if (loc.getLieu().equals(lieu)) {
+                return loc.getReservations().contains(p);
             }
         }
         return false;
@@ -96,15 +105,16 @@ public class Locations {
             return null;
         }
     }
-    
-    public String afficherTarif(String lieu, Genre genre){
-        for(Location loc : locations){
-            if(loc.getLieu().equals(lieu)){
-                return ""+loc.getTarif();
+
+    public String afficherTarif(String lieu, Genre genre) {
+        for (Location loc : locations) {
+            if (loc.getLieu().equals(lieu)) {
+                return "" + loc.getTarif();
             }
         }
         return "le lieu indiqué n'est pas reférencé";
     }
+
     @Override
     public String toString() {
         String result = "";
