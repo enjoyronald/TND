@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="location" type="location"/>
+
+  <xs:element name="locations" type="locations"/>
+
+  <xs:element name="periode" type="periode"/>
+
+  <xs:complexType name="location">
+    <xs:sequence>
+      <xs:element name="lieu" type="xs:string"/>
+      <xs:element name="tarif" type="xs:int"/>
+      <xs:element name="reservations" type="periode" maxOccurs="unbounded"/>
+      <xs:element name="genre" type="genre"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="periode">
+    <xs:sequence>
+      <xs:element name="arrivee" type="xs:dateTime"/>
+      <xs:element name="depart" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="locations">
+    <xs:sequence>
+      <xs:element name="locations" type="location" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="genre">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studio"/>
+      <xs:enumeration value="appartement"/>
+      <xs:enumeration value="maison"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+
