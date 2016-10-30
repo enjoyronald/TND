@@ -33,11 +33,6 @@ public class Personne implements Serializable {
         this.nom = nom;
     }
 
-    public Personne(int id, String nom) {
-        this.id = id;
-        this.nom = nom;
-    }
-
     public String getNom() {
         return nom;
     }

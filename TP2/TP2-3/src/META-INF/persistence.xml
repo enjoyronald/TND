@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>tp23.Employe</class>
     <class>tp23.Personne</class>
+    <class>tp23.Departement</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/entreprise"/>
       <property name="javax.persistence.jdbc.user" value="entreprise"/>

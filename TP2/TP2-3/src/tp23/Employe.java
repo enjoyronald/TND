@@ -16,22 +16,19 @@ import javax.persistence.ManyToOne;
 public class Employe extends Personne{
     @ManyToOne
     protected Employe superieur;
+    @ManyToOne
+    protected Departement departement;
     
     public Employe(){
+        super();
         superieur = null;
+        departement = null;
     }
-    
-    public Employe(String nom){
-        super(nom);
-        superieur=null;
-    }
-    public Employe(int id, String nom){
-        super(id,nom);
-        superieur=null;
-    }
-    public Employe(String nom, Employe superieur){
+
+    public Employe(String nom, Employe superieur, Departement departement){
         super(nom);
         this.superieur=superieur;
+        this.departement = departement;
     }
     
     public Employe getSuperieur(){
@@ -39,5 +36,11 @@ public class Employe extends Personne{
     }
     public void setSuperieur(Employe sup){
         this.superieur=sup;
+    }
+    public Departement getDepartement(){
+        return departement;
+    }
+    public void setDepartement(Departement departement){
+        this.departement=departement;
     }
 }

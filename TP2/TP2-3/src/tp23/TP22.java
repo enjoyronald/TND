@@ -21,18 +21,7 @@ public class TP22 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("TP2-1PU");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        Employe sup = new Employe("boss");
-        Employe emp = new Employe("employe", sup);
-        Personne pierre = new Personne("Pierre");
-        
-        et.begin();
-        em.persist(sup);
-        em.persist(emp);
-        em.persist(pierre);
-        et.commit();
+
 
     }
 

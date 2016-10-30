@@ -14,8 +14,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 /**
  *
  * @author enjoy
@@ -46,8 +44,8 @@ public class EmployeTest {
      */
     @Test
     public void TestEmploye(){
-        Employe sup = new Employe("boss");
-        Employe emp = new Employe("employe",sup);
+        Employe sup = new Employe("boss",null,null);
+        Employe emp = new Employe("employe",sup,null);
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("TP2-1PU");
         EntityManager em = emf.createEntityManager();
