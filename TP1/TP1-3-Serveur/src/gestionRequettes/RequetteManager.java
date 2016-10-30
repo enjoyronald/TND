@@ -11,6 +11,8 @@ import gestionLocation.Periode;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
+import java.net.Socket;
+import java.net.SocketException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,11 +28,13 @@ public class RequetteManager {
     private BufferedReader input;
     private Writer output;
     private Locations locManager;
+    private Socket cs;
 
-    public RequetteManager(BufferedReader input, Writer output, Locations locManager) {
+    public RequetteManager(BufferedReader input, Writer output, Locations locManager, Socket cs) {
         this.input = input;
         this.output = output;
         this.locManager = locManager;
+        this.cs = cs;
         startCommunication();
     }
 
@@ -52,8 +56,10 @@ public class RequetteManager {
                     case "0":
                         envoyerMessage("Au revoir !");
                         input.readLine();//on onsomme la reponse inutile
-                        System.exit(0);
-                        break;
+                        input.close();
+                        output.close();
+                        cs.close();
+                        return;
                     case "1":
                         envoyerMessage("Liste des locations...\n"
                                 + locManager.toString());
@@ -118,13 +124,30 @@ public class RequetteManager {
                             }
                         }
                         break;
+                    case "7":
+                        envoyerMessage("Afficher tarif location :\n"
+                                + " - Lieu : ");
+                        lieu = input.readLine();
+                        envoyerMessage(" - Type : ");
+                        genre = demanderGenre();
+                        envoyerMessage(locManager.afficherTarif(lieu,genre));
+                        input.readLine();
+                        break;
                     default:
-                        envoyerMessage("Commande incorrecte\n");
+                        envoyerMessage("Commande incorrecte");
                         input.readLine();
                         break;
                 }
             } catch (IOException ex) {
-                Logger.getLogger(RequetteManager.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    input.close();
+                    output.close();
+                    cs.close();
+                } catch (IOException ex1) {
+                } finally {
+                    System.out.println("Connexion perdue avec le client");
+                    return;
+                }
             }
         }
     }
@@ -139,6 +162,7 @@ public class RequetteManager {
         menu += "   4) modifier prix location\n";
         menu += "   5) Ajouter une reservation\n";
         menu += "   6) supprimer une reservation\n";
+        menu += "   7) afficher tarif location\n";
         menu += "\n";
         menu += "Votre choix : ";
         return menu;

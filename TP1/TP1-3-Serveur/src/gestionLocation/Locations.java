@@ -96,7 +96,15 @@ public class Locations {
             return null;
         }
     }
-
+    
+    public String afficherTarif(String lieu, Genre genre){
+        for(Location loc : locations){
+            if(loc.getLieu().equals(lieu)){
+                return ""+loc.getTarif();
+            }
+        }
+        return "le lieu indiqué n'est pas reférencé";
+    }
     @Override
     public String toString() {
         String result = "";

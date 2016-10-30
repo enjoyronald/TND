@@ -42,9 +42,14 @@ public class Client {
             StringBuffer sb = new StringBuffer();
 
             while (arret) {// dans ce scenario, on attend le message du serveur avant d'agir
+                try{
                 System.out.println(input.readLine().replaceAll("AntiSlash", "\n")); // recuperation du message du serveur
                 output.write(clientInput.nextLine()+"\n"); // on envoi la reponse du client
                 output.flush();
+                }catch(NullPointerException ex){
+                    System.out.println("Fin du programme");
+                    System.exit(0);
+                }
             }
             connexion.close();
 

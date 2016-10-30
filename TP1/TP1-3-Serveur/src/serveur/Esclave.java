@@ -36,7 +36,7 @@ public class Esclave implements Runnable {
             Writer output = null;
             input = new BufferedReader(new InputStreamReader(cs.getInputStream(), "8859_1"), 10024); // flux en lecture
             output = new OutputStreamWriter(cs.getOutputStream(), "8859_1"); // flux en écriture
-            RequetteManager reqMan = new RequetteManager(input, output, serveur.getLocManager());
+            RequetteManager reqMan = new RequetteManager(input, output, serveur.getLocManager(), cs);
         } catch (IOException ex) {
             Logger.getLogger(Esclave.class.getName()).log(Level.SEVERE, null, ex);
         }
