@@ -3,22 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp11;
+package tp14;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author enjoy
  */
+@XmlRootElement(name = "periode")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = {
+    "arrivee",
+    "depart"
+})
 public class Periode {
+    @XmlElement(required = true)
     protected Date arrivee;
+    @XmlElement(required = true)
     protected Date depart;
     static protected SimpleDateFormat sDF = new SimpleDateFormat("dd/MM/yyyy");
     
-    Periode(String a, String d) throws ParseException{
+    public Periode(){
+        
+    }
+    public Periode(String a, String d) throws ParseException{
         boolean testval = valide(a,d);
         if(testval){
             arrivee= sDF.parse(a);

@@ -3,22 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp11;
+package tp14;
 
 import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author enjoy
  */
+@XmlRootElement(name = "location")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = {
+    "lieu",
+    "tarif",
+    "reservations",
+    "genre"
+})
 public class Location {
-
+    @XmlElement(required = true)
     protected String lieu;
+    @XmlElement(required = true)
     protected int tarif;
+    @XmlElement(required = true)
     protected List<Periode> reservations;
+    @XmlElement(required = true)
     protected Genre genre;
 
-    Location(String lieu, int tarif, Genre genre) {
+    public Location(){
+        
+    }
+    public Location(String lieu, int tarif, Genre genre) {
         this.lieu = lieu;
         this.tarif = tarif;
         this.genre = genre;

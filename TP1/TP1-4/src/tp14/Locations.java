@@ -3,21 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp11;
+package tp14;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author enjoy
  */
+@XmlRootElement(name = "locations")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Locations {
-
+    @XmlElement(required = true)
     protected static List<Location> locations = new ArrayList();
 
-    Locations() {
+    public Locations() {
 
     }
 

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp11;
+package tp14;
 
-import tp11.Periode;
+import tp14.Periode;
 import java.text.ParseException;
 import java.util.Date;
 import org.junit.After;

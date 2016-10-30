@@ -3,15 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp11;
+package tp14;
+
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author enjoy
  */
+@XmlType(name = "genre")
+@XmlEnum
 public enum Genre {
+    @XmlEnumValue("studio")
     STUDIO ("studio"),
+    @XmlEnumValue("apprtement")
     APPARTEMENT ("appartement"),
+    @XmlEnumValue("maison")
     MAISON ("maison");
     
     private String name= "";
