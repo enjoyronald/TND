@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>PizzaList</servlet-name>
+        <servlet-class>administration.PizzaList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PizzaAdd</servlet-name>
+        <servlet-class>administration.PizzaAdd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CommandList</servlet-name>
+        <servlet-class>administration.CommandList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CommandAdd</servlet-name>
+        <servlet-class>administration.CommandAdd</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PizzaList</servlet-name>
+        <url-pattern>/PizzaList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PizzaAdd</servlet-name>
+        <url-pattern>/PizzaAdd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommandList</servlet-name>
+        <url-pattern>/CommandList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommandAdd</servlet-name>
+        <url-pattern>/CommandAdd</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
