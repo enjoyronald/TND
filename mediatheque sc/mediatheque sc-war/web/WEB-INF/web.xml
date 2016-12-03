@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>AjoutLivre</servlet-name>
+        <servlet-class>gestionMedia.AjoutLivre</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AjoutMusique</servlet-name>
+        <servlet-class>gestionMedia.AjoutMusique</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AjoutFilm</servlet-name>
+        <servlet-class>gestionMedia.AjoutFilm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AjoutMedia</servlet-name>
+        <servlet-class>gestionMedia.AjoutMedia</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjoutLivre</servlet-name>
+        <url-pattern>/AjoutLivre</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjoutMusique</servlet-name>
+        <url-pattern>/AjoutMusique</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjoutFilm</servlet-name>
+        <url-pattern>/AjoutFilm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjoutMedia</servlet-name>
+        <url-pattern>/AjoutMedia</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

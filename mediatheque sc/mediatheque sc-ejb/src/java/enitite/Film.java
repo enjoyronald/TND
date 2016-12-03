@@ -6,19 +6,22 @@
 package enitite;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -35,40 +38,33 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Film.findByMediaId", query = "SELECT f FROM Film f WHERE f.mediaId = :mediaId")
     , @NamedQuery(name = "Film.findByRealisateur", query = "SELECT f FROM Film f WHERE f.realisateur = :realisateur")
     , @NamedQuery(name = "Film.findByResume", query = "SELECT f FROM Film f WHERE f.resume = :resume")})
-public class Film implements Serializable {
+public class Film extends Media implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "MEDIA_ID")
-    private Integer mediaId;
+
     @Size(max = 100)
     @Column(name = "REALISATEUR")
     private String realisateur;
     @Size(max = 255)
     @Column(name = "RESUME")
     private String resume;
-    @ManyToMany(mappedBy = "filmCollection")
+    
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "FILM_ACTEUR", joinColumns = {
+        @JoinColumn(name = "FILM_ID", referencedColumnName = "MEDIA_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "NOM_ACTEUR", referencedColumnName = "NOM_ACTEUR")})
     private Collection<Acteur> acteurCollection;
-    @JoinColumn(name = "MEDIA_ID", referencedColumnName = "MEDIA_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Media media;
+
 
     public Film() {
+        acteurCollection = new ArrayList<Acteur>();
     }
 
     public Film(Integer mediaId) {
-        this.mediaId = mediaId;
+        super(mediaId);
+        acteurCollection = new ArrayList<Acteur>();
     }
 
-    public Integer getMediaId() {
-        return mediaId;
-    }
-
-    public void setMediaId(Integer mediaId) {
-        this.mediaId = mediaId;
-    }
 
     public String getRealisateur() {
         return realisateur;
@@ -95,29 +91,34 @@ public class Film implements Serializable {
         this.acteurCollection = acteurCollection;
     }
 
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (mediaId != null ? mediaId.hashCode() : 0);
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.realisateur);
+        hash = 89 * hash + Objects.hashCode(this.resume);
+        hash = 89 * hash + Objects.hashCode(this.acteurCollection);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Film)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Film other = (Film) object;
-        if ((this.mediaId == null && other.mediaId != null) || (this.mediaId != null && !this.mediaId.equals(other.mediaId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Film other = (Film) obj;
+        if (!Objects.equals(this.realisateur, other.realisateur)) {
+            return false;
+        }
+        if (!Objects.equals(this.resume, other.resume)) {
+            return false;
+        }
+        if (!Objects.equals(this.acteurCollection, other.acteurCollection)) {
             return false;
         }
         return true;
@@ -125,7 +126,9 @@ public class Film implements Serializable {
 
     @Override
     public String toString() {
-        return "enitite.Film[ mediaId=" + mediaId + " ]";
+        return "Film{" + "realisateur=" + realisateur + ", resume=" + resume + ", acteurCollection=" + acteurCollection + '}';
     }
+
+
     
 }

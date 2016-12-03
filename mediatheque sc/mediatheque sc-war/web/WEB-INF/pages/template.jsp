@@ -12,23 +12,22 @@
     <body> 
         <header>
             <jsp:include page="/WEB-INF/pages/header.jsp"></jsp:include>
-        </header>
-        <div class="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8"> 
-                        <jsp:include page="/WEB-INF/pages/${param.main}.jsp"></jsp:include>
+            </header>
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                        <jsp:include page="/WEB-INF/${param.main}.jsp?${param.parametres}"></jsp:include>
+                        </div>
+                        <div class="col-md-2"></div>
                     </div>
-                    <div class="col-md-2"></div>
                 </div>
             </div>
-        </div>
-        <!-- main body -->
-        <jsp:include page="/WEB-INF/pages/footer.jsp"></jsp:include>
-        
-        
-        
+            <footer>
+            <jsp:include page="/WEB-INF/pages/footer.jsp"></jsp:include>
+        </footer>
+
     </body>
 </html>
 

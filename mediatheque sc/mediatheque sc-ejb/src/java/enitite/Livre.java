@@ -6,6 +6,7 @@
 package enitite;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,44 +25,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enjoy
  */
 @Entity
-@Table(name = "livre")
+@Table(name = "LIVRE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Livre.findAll", query = "SELECT l FROM Livre l")
     , @NamedQuery(name = "Livre.findByMediaId", query = "SELECT l FROM Livre l WHERE l.mediaId = :mediaId")
     , @NamedQuery(name = "Livre.findByAuteur", query = "SELECT l FROM Livre l WHERE l.auteur = :auteur")
     , @NamedQuery(name = "Livre.findByResume", query = "SELECT l FROM Livre l WHERE l.resume = :resume")})
-public class Livre implements Serializable {
+public class Livre extends Media implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "MEDIA_ID")
-    private Integer mediaId;
+
     @Size(max = 100)
     @Column(name = "AUTEUR")
     private String auteur;
     @Size(max = 255)
     @Column(name = "RESUME")
     private String resume;
-    @JoinColumn(name = "MEDIA_ID", referencedColumnName = "MEDIA_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Media media;
+
 
     public Livre() {
     }
 
     public Livre(Integer mediaId) {
-        this.mediaId = mediaId;
-    }
-
-    public Integer getMediaId() {
-        return mediaId;
-    }
-
-    public void setMediaId(Integer mediaId) {
-        this.mediaId = mediaId;
+        super(mediaId);
     }
 
     public String getAuteur() {
@@ -80,37 +67,35 @@ public class Livre implements Serializable {
         this.resume = resume;
     }
 
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (mediaId != null ? mediaId.hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.auteur);
+        hash = 89 * hash + Objects.hashCode(this.resume);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Livre)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Livre other = (Livre) object;
-        if ((this.mediaId == null && other.mediaId != null) || (this.mediaId != null && !this.mediaId.equals(other.mediaId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Livre other = (Livre) obj;
+        if (!Objects.equals(this.auteur, other.auteur)) {
+            return false;
+        }
+        if (!Objects.equals(this.resume, other.resume)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "enitite.Livre[ mediaId=" + mediaId + " ]";
-    }
+    
     
 }

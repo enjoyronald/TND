@@ -6,12 +6,11 @@
 package enitite;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -19,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,46 +32,37 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Acteur.findAll", query = "SELECT a FROM Acteur a")
-    , @NamedQuery(name = "Acteur.findByActeurId", query = "SELECT a FROM Acteur a WHERE a.acteurId = :acteurId")
-    , @NamedQuery(name = "Acteur.findByNom", query = "SELECT a FROM Acteur a WHERE a.nom = :nom")})
+    , @NamedQuery(name = "Acteur.findByNomActeur", query = "SELECT a FROM Acteur a WHERE a.nomActeur = :nomActeur")})
 public class Acteur implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ACTEUR_ID")
-    private Integer acteurId;
-    @Size(max = 100)
-    @Column(name = "NOM")
-    private String nom;
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "NOM_ACTEUR")
+    private String nomActeur;
     @JoinTable(name = "FILM_ACTEUR", joinColumns = {
-        @JoinColumn(name = "ACTEUR_ID", referencedColumnName = "ACTEUR_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "NOM_ACTEUR", referencedColumnName = "NOM_ACTEUR")}, inverseJoinColumns = {
         @JoinColumn(name = "FILM_ID", referencedColumnName = "MEDIA_ID")})
     @ManyToMany
     private Collection<Film> filmCollection;
 
     public Acteur() {
+        filmCollection = new ArrayList<Film>();
     }
 
-    public Acteur(Integer acteurId) {
-        this.acteurId = acteurId;
+    public Acteur(String nomActeur) {
+        this.nomActeur = nomActeur;
+        filmCollection = new ArrayList<Film>();
     }
 
-    public Integer getActeurId() {
-        return acteurId;
+    public String getNomActeur() {
+        return nomActeur;
     }
 
-    public void setActeurId(Integer acteurId) {
-        this.acteurId = acteurId;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNomActeur(String nomActeur) {
+        this.nomActeur = nomActeur;
     }
 
     @XmlTransient
@@ -86,7 +77,7 @@ public class Acteur implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (acteurId != null ? acteurId.hashCode() : 0);
+        hash += (nomActeur != null ? nomActeur.hashCode() : 0);
         return hash;
     }
 
@@ -97,7 +88,7 @@ public class Acteur implements Serializable {
             return false;
         }
         Acteur other = (Acteur) object;
-        if ((this.acteurId == null && other.acteurId != null) || (this.acteurId != null && !this.acteurId.equals(other.acteurId))) {
+        if ((this.nomActeur == null && other.nomActeur != null) || (this.nomActeur != null && !this.nomActeur.equals(other.nomActeur))) {
             return false;
         }
         return true;
@@ -105,7 +96,9 @@ public class Acteur implements Serializable {
 
     @Override
     public String toString() {
-        return "enitite.Acteur[ acteurId=" + acteurId + " ]";
+        return "Acteur{" + "nomActeur=" + nomActeur + ", filmCollection=" + filmCollection + '}';
     }
+
+
     
 }

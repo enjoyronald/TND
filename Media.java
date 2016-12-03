@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -32,8 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enjoy
  */
 @Entity
-@Table(name = "MEDIA")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "media")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Media.findAll", query = "SELECT m FROM Media m")
@@ -45,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Media.findByTitre", query = "SELECT m FROM Media m WHERE m.titre = :titre")
     , @NamedQuery(name = "Media.findByAnneeProduction", query = "SELECT m FROM Media m WHERE m.anneeProduction = :anneeProduction")
     , @NamedQuery(name = "Media.findByFormat", query = "SELECT m FROM Media m WHERE m.format = :format")})
-public abstract class Media implements Serializable {
+public class Media implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,10 +69,15 @@ public abstract class Media implements Serializable {
     @Size(max = 10)
     @Column(name = "FORMAT")
     private String format;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "media")
+    private Film film;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "media")
+    private Musique musique;
     @JoinColumn(name = "USER_NAME", referencedColumnName = "USER_NAME")
     @ManyToOne
     private Abonnee userName;
-    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "media")
+    private Livre livre;
 
     public Media() {
     }
@@ -148,6 +150,21 @@ public abstract class Media implements Serializable {
         this.format = format;
     }
 
+    public Film getFilm() {
+        return film;
+    }
+
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
+    public Musique getMusique() {
+        return musique;
+    }
+
+    public void setMusique(Musique musique) {
+        this.musique = musique;
+    }
 
     public Abonnee getUserName() {
         return userName;
@@ -155,6 +172,14 @@ public abstract class Media implements Serializable {
 
     public void setUserName(Abonnee userName) {
         this.userName = userName;
+    }
+
+    public Livre getLivre() {
+        return livre;
+    }
+
+    public void setLivre(Livre livre) {
+        this.livre = livre;
     }
 
     @Override

@@ -6,17 +6,17 @@
 package enitite;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,44 +25,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enjoy
  */
 @Entity
-@Table(name = "musique")
+@Table(name = "MUSIQUE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Musique.findAll", query = "SELECT m FROM Musique m")
     , @NamedQuery(name = "Musique.findByMediaId", query = "SELECT m FROM Musique m WHERE m.mediaId = :mediaId")
     , @NamedQuery(name = "Musique.findByArtiste", query = "SELECT m FROM Musique m WHERE m.artiste = :artiste")
     , @NamedQuery(name = "Musique.findByMorceaux", query = "SELECT m FROM Musique m WHERE m.morceaux = :morceaux")})
-public class Musique implements Serializable {
+public class Musique extends Media implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "MEDIA_ID")
-    private Integer mediaId;
+
     @Size(max = 100)
     @Column(name = "ARTISTE")
     private String artiste;
     @Size(max = 255)
     @Column(name = "MORCEAUX")
     private String morceaux;
-    @JoinColumn(name = "MEDIA_ID", referencedColumnName = "MEDIA_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Media media;
 
     public Musique() {
     }
 
     public Musique(Integer mediaId) {
-        this.mediaId = mediaId;
-    }
-
-    public Integer getMediaId() {
-        return mediaId;
-    }
-
-    public void setMediaId(Integer mediaId) {
-        this.mediaId = mediaId;
+        super(mediaId);
     }
 
     public String getArtiste() {
@@ -81,29 +66,30 @@ public class Musique implements Serializable {
         this.morceaux = morceaux;
     }
 
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (mediaId != null ? mediaId.hashCode() : 0);
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.artiste);
+        hash = 17 * hash + Objects.hashCode(this.morceaux);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Musique)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Musique other = (Musique) object;
-        if ((this.mediaId == null && other.mediaId != null) || (this.mediaId != null && !this.mediaId.equals(other.mediaId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Musique other = (Musique) obj;
+        if (!Objects.equals(this.artiste, other.artiste)) {
+            return false;
+        }
+        if (!Objects.equals(this.morceaux, other.morceaux)) {
             return false;
         }
         return true;
@@ -111,7 +97,7 @@ public class Musique implements Serializable {
 
     @Override
     public String toString() {
-        return "enitite.Musique[ mediaId=" + mediaId + " ]";
+        return "Musique{" + "artiste=" + artiste + ", morceaux=" + morceaux + '}';
     }
-    
+
 }
