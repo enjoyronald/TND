@@ -32,4 +32,6 @@ public interface FilmFacadeLocal {
     
     public Film findByTitreRealisateur(String titre, String realisateur);
     
+    public List<Film> findDistinctFilm();
+    
 }

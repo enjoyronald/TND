@@ -32,4 +32,6 @@ public interface MusiqueFacadeLocal {
     
     public Musique findByTitreArtiste(String titre, String artiste);
     
+    public List<Musique> findDistinctMusique();
+    
 }

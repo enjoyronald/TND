@@ -92,3 +92,7 @@
 /mediatheque sc/mediatheque sc-war/dist/
 /mediatheque sc/mediatheque sc-ejb/dist/
 /mediatheque sc/dist/
+/mediatheque_sc_new/nbproject/private/
+/mediatheque_sc_new/mediatheque_sc_new-war/nbproject/private/
+/mediatheque_sc_new/mediatheque_sc_new-ejb/nbproject/private/
+/mediatheque_sc_new/mediatheque_sc_new-ejb/build/

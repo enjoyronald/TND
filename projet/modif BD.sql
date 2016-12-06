@@ -54,6 +54,15 @@ create table livre (
 	foreign key (MEDIA_ID) references media(MEDIA_ID)
 );
 
+create table livre_exemplaire (
+	MEDIA_ID integer,
+	AUTEUR varchar(100),
+	LIVRE_EX_ID integer generated always as identity,
+	ETAT varchar(20),
+	primary key (MEDIA_ID,AUTEUR,LIVRE_EX_ID),
+	foreign key (MEDIA_ID,AUTEUR) references livre(MEDIA_ID,AUTEUR)
+);
+
 
 create table musique ( 
 	MEDIA_ID integer,
@@ -70,7 +79,7 @@ create table musique_ex(
 	ETAT varchar(20),
 	primary key (MUSIQUE_EX_ID,MEDIA_ID,ARTISTE),
 	foreign key (MEDIA_ID,ARTISTE) references musique(MEDIA_ID,ARTISTE)
-	
+	 
 );
 
 
@@ -80,6 +89,12 @@ create table FILM (
 	RESUME varchar(255),
 	primary key (MEDIA_ID,REALISATEUR),
 	foreign key (MEDIA_ID) references media(MEDIA_ID)
+);
+
+create table FILM_EXEMPLAIRE (
+	MEDIA_ID integer,
+	REALISATEUR varchar(100),
+	ETAT varchar(20),
 );
 
 create table ACTEUR ( 

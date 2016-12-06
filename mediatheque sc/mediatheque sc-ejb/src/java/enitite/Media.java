@@ -6,6 +6,7 @@
 package enitite;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -17,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -75,7 +78,7 @@ public abstract class Media implements Serializable {
     @JoinColumn(name = "USER_NAME", referencedColumnName = "USER_NAME")
     @ManyToOne
     private Abonnee userName;
-    
+
 
     public Media() {
     }
@@ -148,7 +151,6 @@ public abstract class Media implements Serializable {
         this.format = format;
     }
 
-
     public Abonnee getUserName() {
         return userName;
     }
@@ -181,5 +183,5 @@ public abstract class Media implements Serializable {
     public String toString() {
         return "enitite.Media[ mediaId=" + mediaId + " ]";
     }
-    
+
 }

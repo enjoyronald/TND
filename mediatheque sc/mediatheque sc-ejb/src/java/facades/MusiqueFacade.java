@@ -7,6 +7,7 @@ package facades;
 
 import enitite.Livre;
 import enitite.Musique;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -45,5 +46,40 @@ public class MusiqueFacade extends AbstractFacade<Musique> implements MusiqueFac
         } catch (Exception ex) {
             return null;
         }
+    }
+    
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<Musique> findDistinctMusique() {
+        //String jpql = "SELECT film From Film film,(SELECT DISTINCT(film.titre,film.realisateur) film.mediaId from Film film) film2 "
+        //       + " WHERE film.mediaId = film2.mediaId";
+        String sql = "SELECT DISTINCT artiste,titre \n"
+                + "    FROM MUSIQUE as f NATURAL JOIN MEDIA as m\n"
+                + "    WHERE artiste is not null "
+                + "";
+
+        String jpql = "SELECT livre From Livre livre";
+        // on va envoyer une map film, count
+
+        Query query = em.createNativeQuery(sql);
+        String artiste = "";
+        String titre = "";
+
+        List<Object[]> autTitre = query.getResultList();
+        List<Musique> musiques = new ArrayList<>();
+        if (autTitre == null) {
+            return null; // il y a pas de livre dans la bd
+        }
+        for (Object o[] : autTitre) {
+            artiste = (String) o[0];
+            titre = (String) o[1];
+            musiques.add(findByTitreArtiste(titre, artiste));
+
+        }
+        return musiques;
+
     }
 }

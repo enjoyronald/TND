@@ -106,53 +106,46 @@
 <!-- Zone ajout d'un film-->
 <div class="row" id="div_ajouter_musique" style="display:none;">
     <div class="col-md-12">
-        <div class="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>AJOUTER MUSIQUE</h3>
+
+        <div class="col-md-12">
+            <h3>AJOUTER MUSIQUE</h3>
+        </div>
+        <div class="col-md-12">
+            <form class="form-horizontal" role="form" method="POST" action="AjoutMedia">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label for="titre" class="control-label">Titre</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="titre" name="titre" placeholder="titre" required>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <form class="form-horizontal" role="form" method="POST" action="AjoutMedia">
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                    <label for="titre" class="control-label">Titre</label>
-                                </div>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" id="titre" name="titre" placeholder="titre" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                    <label for="artiste" class="control-label">Artiste </label>
-                                </div>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" id="artiste" placeholder="artiste" name="artiste" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                    <label for="format" class="control-label">Format</label>
-                                </div>
-                                <div class="col-md-10">
-                                    <select name="format" class="col-md-12 form-control" required>
-                                        <option value="dvd">DVD</option>
-                                        <option value="cd">CD</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <input type="hidden" class="form-control" id="type" name="type" value="musique">
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" class="btn btn-default">Ajouter</button>
-                                </div>
-                            </div>
-                        </form>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label for="artiste" class="control-label">Artiste </label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="artiste" placeholder="artiste" name="artiste" required>
                     </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label for="format" class="control-label">Format</label>
+                    </div>
+                    <div class="col-md-10">
+                        <select name="format" class="col-md-12 form-control" required>
+                            <option value="dvd">DVD</option>
+                            <option value="cd">CD</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" id="type" name="type" value="musique">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Ajouter</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

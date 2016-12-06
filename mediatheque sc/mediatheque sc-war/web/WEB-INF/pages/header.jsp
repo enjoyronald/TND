@@ -17,6 +17,9 @@
             <li>
               <a href="ajouterMedia.jsp">Ajouter Media</a>
             </li>
+            <li>
+              <a href="afficherTousMedias.jsp">Afficher Media</a>
+            </li>
           </ul>
         </div>
       </div>
