@@ -6,6 +6,7 @@
 package enitite;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -67,6 +68,10 @@ public class Abonnee implements Serializable {
     @Column(name = "FIN_ABONNEMENT")
     @Temporal(TemporalType.DATE)
     private Date finAbonnement;
+    @Size(max = 100)
+    @Column(name = "EMAIL")
+    private String emai;
+
     @OneToMany(mappedBy = "userName")
     private Collection<Media> mediaCollection;
     @JoinColumn(name = "ABONNEMENT_ID", referencedColumnName = "ABONNEMENT_ID")
@@ -74,10 +79,12 @@ public class Abonnee implements Serializable {
     private Abonnement abonnementId;
 
     public Abonnee() {
+        mediaCollection = new ArrayList<>();
     }
 
     public Abonnee(String userName) {
         this.userName = userName;
+        mediaCollection = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -104,6 +111,13 @@ public class Abonnee implements Serializable {
         this.nom = nom;
     }
 
+    public String getEmai() {
+        return emai;
+    }
+
+    public void setEmai(String emai) {
+        this.emai = emai;
+    }
     public String getPrenom() {
         return prenom;
     }
@@ -176,6 +190,19 @@ public class Abonnee implements Serializable {
     @Override
     public String toString() {
         return "enitite.Abonnee[ userName=" + userName + " ]";
+    }
+    
+    public int getNombreRetard(){
+        int nbre = 0;
+        Date retour,today;
+        for(Media media : mediaCollection){
+            retour = media.getDateFin();
+            today = new Date();
+            if(today.after(retour)){
+                nbre+=1;
+            }
+        }
+        return nbre;
     }
     
 }
