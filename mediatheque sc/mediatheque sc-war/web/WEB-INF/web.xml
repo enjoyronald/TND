@@ -32,6 +32,14 @@
         <servlet-name>Deconnexion</servlet-name>
         <servlet-class>gestionClient.Deconnexion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AfficherUnMedia</servlet-name>
+        <servlet-class>gestionMedia.AfficherUnMedia</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EnregistrerEmprunt</servlet-name>
+        <servlet-class>gestionEmprunt.EnregistrerEmprunt</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AjoutLivre</servlet-name>
         <url-pattern>/AjoutLivre</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>Deconnexion</servlet-name>
         <url-pattern>/Deconnexion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AfficherUnMedia</servlet-name>
+        <url-pattern>/AfficherUnMedia</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnregistrerEmprunt</servlet-name>
+        <url-pattern>/EnregistrerEmprunt</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

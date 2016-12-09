@@ -33,5 +33,7 @@ public interface LivreFacadeLocal {
     public Livre findByTitreAuteur(String titre, String auteur);
     
      public List<Livre> findDistinctLivre();
+     
+     public Livre findDispoByTitreAuteur(String titre, String auteur);
     
 }

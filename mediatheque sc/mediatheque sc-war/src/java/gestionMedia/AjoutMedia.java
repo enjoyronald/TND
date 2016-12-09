@@ -231,7 +231,7 @@ public class AjoutMedia extends HttpServlet {
         musique.setTitre(request.getParameter("titre"));
         musique.setArtiste(request.getParameter("artiste"));
         musique.setAnneeProduction(new Integer(request.getParameter("annee")));
-        musique.setAnneeProduction(0);
+        musique.setEmprunt(0);
         musique.setEtat(request.getParameter("etat"));
         musique.setFormat(request.getParameter("format"));
         musique.setMorceaux(request.getParameter("morceaux"));

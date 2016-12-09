@@ -37,10 +37,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="ajouterMedia.jsp">Ajouter Media</a></li>
                                 <li><a href="afficherAbonnees.jsp">afficher abonnees</a></li>
-                                <li><a href="enregisterEmprunt.jsp">Enregistrer Emprunt</a></li>
+                                <li><a href="enregistrerEmprunt.jsp">Enregistrer Emprunt</a></li>
                                 <li><a href="retourEmprunt.jsp">Retour Emprunt</a></li>
-                                <li><a href="creerAbonnement.jsp">Creer Abonnement</a></li>
-                                <li><a href="voirAbonnements.jsp">Voir Abonnements</a></li>
                             </ul> 
                         </li>
                         <li class="dropdown">

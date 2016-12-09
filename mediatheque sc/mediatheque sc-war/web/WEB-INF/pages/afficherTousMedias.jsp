@@ -25,7 +25,7 @@
                     <tbody>
                         <c:forEach var="film" items="${films}" varStatus="loop">
                             <tr>
-                                <td><a href="${context}/pages/afficherUnMedia?mediaId=${film.getMediaId()}">${film.getTitre()}</a></td>
+                                <td><a href="AfficherUnMedia?mediaId=${film.getMediaId()}">${film.getTitre()}</a></td>
                                 <td>${film.getRealisateur()}</td>
                                 <td>${pizza.getAnneeProduction()}</td>
                             </tr>
@@ -54,7 +54,8 @@
                     <tbody>
                         <c:forEach var="livre" items="${livres}" varStatus="loop">
                             <tr>
-                                <td><a href="${context}/pages/afficherUnMedia?mediaId=${livre.getMediaId()}">${livre.getTitre()}</a></td>
+                                <c:set var="mediaId" value="${livre.getMediaId()}" scope="request"/>
+                                <td><a href="AfficherUnMedia?mediaId=${livre.getMediaId()}">${livre.getTitre()}</a></td>
                                 <td>${livre.getAuteur()}</td>
                                 <td>${livre.getAnneeProduction()}</td>
                             </tr>
@@ -83,7 +84,8 @@
                     <tbody>
                         <c:forEach var="musique" items="${musiques}" varStatus="loop">
                             <tr>
-                                <td><a href="${context}/pages/afficherUnMedia?mediaId=${musique.getMediaId()}&type=musique">${musique.getTitre()}</a></td>
+                                <c:set var="mediaId" value="${musique.getMediaId()}" scope="request"/>
+                                <td><a href="${context}/AfficherUnMedia?mediaId=${musique.getMediaId()}">${musique.getTitre()}</a></td>
                                 <td>${musique.getArtiste()}</td>
                                 <td>${musique.getAnneeProduction()}</td>
                             </tr>

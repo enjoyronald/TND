@@ -40,8 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Abonnee.findByNom", query = "SELECT a FROM Abonnee a WHERE a.nom = :nom")
     , @NamedQuery(name = "Abonnee.findByPrenom", query = "SELECT a FROM Abonnee a WHERE a.prenom = :prenom")
     , @NamedQuery(name = "Abonnee.findByTelephone", query = "SELECT a FROM Abonnee a WHERE a.telephone = :telephone")
-    , @NamedQuery(name = "Abonnee.findByAdresse", query = "SELECT a FROM Abonnee a WHERE a.adresse = :adresse")
-    , @NamedQuery(name = "Abonnee.findByFinAbonnement", query = "SELECT a FROM Abonnee a WHERE a.finAbonnement = :finAbonnement")})
+    , @NamedQuery(name = "Abonnee.findByAdresse", query = "SELECT a FROM Abonnee a WHERE a.adresse = :adresse")})
 public class Abonnee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,18 +64,13 @@ public class Abonnee implements Serializable {
     @Size(max = 100)
     @Column(name = "ADRESSE")
     private String adresse;
-    @Column(name = "FIN_ABONNEMENT")
-    @Temporal(TemporalType.DATE)
-    private Date finAbonnement;
+
     @Size(max = 100)
     @Column(name = "EMAIL")
     private String emai;
 
     @OneToMany(mappedBy = "userName")
     private Collection<Media> mediaCollection;
-    @JoinColumn(name = "ABONNEMENT_ID", referencedColumnName = "ABONNEMENT_ID")
-    @ManyToOne
-    private Abonnement abonnementId;
 
     public Abonnee() {
         mediaCollection = new ArrayList<>();
@@ -142,14 +136,6 @@ public class Abonnee implements Serializable {
         this.adresse = adresse;
     }
 
-    public Date getFinAbonnement() {
-        return finAbonnement;
-    }
-
-    public void setFinAbonnement(Date finAbonnement) {
-        this.finAbonnement = finAbonnement;
-    }
-
     @XmlTransient
     public Collection<Media> getMediaCollection() {
         return mediaCollection;
@@ -159,13 +145,6 @@ public class Abonnee implements Serializable {
         this.mediaCollection = mediaCollection;
     }
 
-    public Abonnement getAbonnementId() {
-        return abonnementId;
-    }
-
-    public void setAbonnementId(Abonnement abonnementId) {
-        this.abonnementId = abonnementId;
-    }
 
     @Override
     public int hashCode() {

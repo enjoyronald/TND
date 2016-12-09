@@ -45,6 +45,25 @@ public class LivreFacade extends AbstractFacade<Livre> implements LivreFacadeLoc
            return null;
        }
    }
+   
+    public Livre findDispoByTitreAuteur(String titre, String auteur) {
+        String jpql = "SELECT livre From Livre livre WHERE livre.titre='" + titre + "' and livre.auteur ='" + auteur + "'";
+        Query query = em.createQuery(jpql);
+        try {
+            List<Livre> livres = query.getResultList();
+            if (livres.isEmpty()) {
+                return null;
+            }
+            for(Livre livre : livres){
+                if(livre.getEmprunt() == 0){
+                    return livre;
+                }
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
     /**
      *
      * @return

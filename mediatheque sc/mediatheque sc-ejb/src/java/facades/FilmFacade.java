@@ -47,6 +47,27 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
             return null;
         }
     }
+    
+    @Override
+    public Film findDispoByTitreRealisateur(String titre, String realisateur) {
+        String sql = "SELECT film.";
+        String jpql = "SELECT film From Film film WHERE film.titre='" + titre + "' and film.realisateur ='" + realisateur + "'";
+        Query query = em.createQuery(jpql);
+        try {
+            List<Film> films = query.getResultList();
+            if (films.isEmpty()) {
+                return null;
+            }
+            for(Film film : films){
+                if(film.getEmprunt() == 0){
+                    return film;
+                }
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 
     /**
      *

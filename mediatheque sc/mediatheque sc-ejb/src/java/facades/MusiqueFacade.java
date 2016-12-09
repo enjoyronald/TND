@@ -48,6 +48,26 @@ public class MusiqueFacade extends AbstractFacade<Musique> implements MusiqueFac
         }
     }
     
+    @Override
+    public Musique findDispoByTitreArtiste(String titre, String artiste) {
+        String jpql = "SELECT musique From Musique musique WHERE musique.titre='" + titre + "' and musique.artiste ='" + artiste + "'";
+        Query query = em.createQuery(jpql);
+        try {
+            List<Musique> musiques = query.getResultList();
+            if (musiques.isEmpty()) {
+                return null;
+            }
+            for(Musique musique : musiques){
+                if(musique.getEmprunt() == 0){
+                    return musique;
+                }
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    
     /**
      *
      * @return
