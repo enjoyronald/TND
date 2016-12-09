@@ -176,8 +176,6 @@ public class inscription_connexion extends HttpServlet {
             response.sendRedirect("index.jsp");
             
         }
-        
-        
     }
 
 }

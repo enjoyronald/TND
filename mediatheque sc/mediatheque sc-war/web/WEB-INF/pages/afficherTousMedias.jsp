@@ -7,6 +7,7 @@
 <c:set var="films_size" value="${requestScope.films_size}" />
 <c:set var="musiques_size" value="${requestScope.musiques_size}" />
 <c:set var="livres_size" value="${requestScope.livres_size}" />
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="col-md-12">
     <fieldset>
         <legend>Films</legend>
@@ -24,7 +25,7 @@
                     <tbody>
                         <c:forEach var="film" items="${films}" varStatus="loop">
                             <tr>
-                                <td>${film.getTitre()}</td>
+                                <td><a href="${context}/pages/afficherUnMedia?mediaId=${film.getMediaId()}">${film.getTitre()}</a></td>
                                 <td>${film.getRealisateur()}</td>
                                 <td>${pizza.getAnneeProduction()}</td>
                             </tr>
@@ -53,7 +54,7 @@
                     <tbody>
                         <c:forEach var="livre" items="${livres}" varStatus="loop">
                             <tr>
-                                <td>${livre.getTitre()}</td>
+                                <td><a href="${context}/pages/afficherUnMedia?mediaId=${livre.getMediaId()}">${livre.getTitre()}</a></td>
                                 <td>${livre.getAuteur()}</td>
                                 <td>${livre.getAnneeProduction()}</td>
                             </tr>
@@ -82,7 +83,7 @@
                     <tbody>
                         <c:forEach var="musique" items="${musiques}" varStatus="loop">
                             <tr>
-                                <td>${musique.getTitre()}</td>
+                                <td><a href="${context}/pages/afficherUnMedia?mediaId=${musique.getMediaId()}&type=musique">${musique.getTitre()}</a></td>
                                 <td>${musique.getArtiste()}</td>
                                 <td>${musique.getAnneeProduction()}</td>
                             </tr>
