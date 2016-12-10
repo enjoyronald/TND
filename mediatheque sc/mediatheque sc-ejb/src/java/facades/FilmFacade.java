@@ -47,7 +47,7 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
             return null;
         }
     }
-    
+
     @Override
     public Film findDispoByTitreRealisateur(String titre, String realisateur) {
         String sql = "SELECT film.";
@@ -58,12 +58,23 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
             if (films.isEmpty()) {
                 return null;
             }
-            for(Film film : films){
-                if(film.getEmprunt() == 0){
+            for (Film film : films) {
+                if (film.getEmprunt() == 0) {
                     return film;
                 }
             }
             return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Film> findAllCopyFilm(String titre, String realisateur) {
+        String jpql = "SELECT film From Film film WHERE film.titre='" + titre + "' and film.realisateur ='" + realisateur + "'";
+        Query query = em.createQuery(jpql);
+        try {
+            return query.getResultList();
         } catch (Exception ex) {
             return null;
         }
@@ -86,24 +97,109 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
         // on va envoyer une map film, count
 
         Query query = em.createNativeQuery(sql);
-        String realisateur= "";
-        String titre ="";
-        
-        List<Object []> reaTitre = query.getResultList();
+        String realisateur = "";
+        String titre = "";
+
+        List<Object[]> reaTitre = query.getResultList();
         List<Film> films = new ArrayList<>();
-        if(reaTitre == null){
+        if (reaTitre == null) {
             return null; // il y a pas de film dans la bd
         }
-        for (Object o[] : reaTitre){
+        for (Object o[] : reaTitre) {
             realisateur = (String) o[0];
             titre = (String) o[1];
             films.add(findByTitreRealisateur(titre, realisateur));
-            
+
         }
         return films;
-
     }
 
-    
+    @Override
+    public List<Film> findByTitre(String titre) {
+        String sql = "SELECT DISTINCT realisateur,titre \n"
+                + "    FROM FILM as f NATURAL JOIN MEDIA as m\n"
+                + "    WHERE titre='"+titre+"' "
+                + "";
 
+        Query query = em.createNativeQuery(sql);
+        String realisateur = "";
+
+        List<Object[]> reaTitre = query.getResultList();
+        List<Film> films = new ArrayList<>();
+        if (reaTitre == null) {
+            return null; // il y a pas de film dans la bd
+        }
+        for (Object o[] : reaTitre) {
+            realisateur = (String) o[0];
+            titre = (String) o[1];
+            films.add(findByTitreRealisateur(titre, realisateur));
+
+        }
+        return films;
+    }
+    
+    @Override
+    public List<Film> findByRealisateur(String realisateur) {
+        String sql = "SELECT DISTINCT realisateur,titre \n"
+                + "    FROM FILM as f NATURAL JOIN MEDIA as m\n"
+                + "    WHERE realisateur ='"+realisateur+"' "
+                + "";
+
+        Query query = em.createNativeQuery(sql);
+        String titre = "";
+
+        List<Object[]> reaTitre = query.getResultList();
+        List<Film> films = new ArrayList<>();
+        if (reaTitre == null) {
+            return null; // il y a pas de film dans la bd
+        }
+        for (Object o[] : reaTitre) {
+            realisateur = (String) o[0];
+            titre = (String) o[1];
+            films.add(findByTitreRealisateur(titre, realisateur));
+
+        }
+        return films;
+    }
+    
+    public List<Film> findByActeur(String acteur) {
+        String sql = "SELECT DISTINCT realisateur,titre "
+                + "    FROM FILM as f,MEDIA as m,FILM_ACTEUR as fa,Acteur as a "
+                + "    WHERE f.media_id= m.media_id"
+                + "    and fa.film_id = f.media_id"
+                + "    and fa.nom_acteur=a.nom_acteur"
+                + "    and a.nom_acteur ='" + acteur + "' "
+                + "";
+        Query query = em.createNativeQuery(sql);
+        String realisateur = "";
+        String titre = "";
+
+        List<Object[]> reaTitre = query.getResultList();
+        List<Film> films = new ArrayList<>();
+        if (reaTitre == null) {
+            return null; // il y a pas de film dans la bd
+        }
+        for (Object o[] : reaTitre) {
+            realisateur = (String) o[0];
+            titre = (String) o[1];
+            films.add(findByTitreRealisateur(titre, realisateur));
+
+        }
+        return films;
+    }
+    /*
+    String sql ="select film_id as mediaId from FILM_ACTEUR"
+                + " where nom_acteur ='"+acteur+"'";
+        Query query = em.createNativeQuery(sql);
+        
+        List<Integer> lMediaId= query.getResultList();
+        List<Film> films = new ArrayList<>();
+        if(lMediaId == null){
+            return null;
+        }
+        for(int mediaId : lMediaId){
+            films.add(this.find(mediaId));
+        }
+        return films;
+    */
 }

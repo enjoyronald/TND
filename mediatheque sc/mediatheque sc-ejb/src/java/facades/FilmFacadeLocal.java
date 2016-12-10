@@ -36,4 +36,12 @@ public interface FilmFacadeLocal {
     
     public Film findDispoByTitreRealisateur(String titre, String realisateur);
     
+    public List<Film> findAllCopyFilm(String titre, String realisateur);
+    
+    public List<Film> findByTitre(String titre);
+    
+    public List<Film> findByRealisateur(String realisateur);
+    
+    public List<Film> findByActeur(String acteur);
+    
 }

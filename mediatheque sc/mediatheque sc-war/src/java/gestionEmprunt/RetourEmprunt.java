@@ -9,6 +9,7 @@ import enitite.Abonnee;
 import enitite.Emprunt;
 import enitite.Film;
 import enitite.Livre;
+import enitite.Media;
 import enitite.Musique;
 import facades.AbonneeFacadeLocal;
 import facades.EmpruntFacadeLocal;
@@ -18,7 +19,10 @@ import facades.MusiqueFacadeLocal;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author enjoy
  */
-public class EnregistrerEmprunt extends HttpServlet {
+public class RetourEmprunt extends HttpServlet {
 
     @EJB
     private EmpruntFacadeLocal empruntFacade;
@@ -57,139 +61,145 @@ public class EnregistrerEmprunt extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Date dateRetour;
+
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String sDateEmprunt = simpleDateFormat.format(new Date());
-            Date dateEmprunt = simpleDateFormat.parse(sDateEmprunt);
-            Emprunt emprunt = new Emprunt();
+            Date dateRetour = simpleDateFormat.parse(sDateEmprunt);
+            Emprunt emprunt;
             String type = request.getParameter("type");
             String username = request.getParameter("username");
             String titre = request.getParameter("titre");
             String auteur = request.getParameter("auteur");
-            String sDateR = request.getParameter("dateR");
-            if (type == null || username == null || titre == null || auteur == null || sDateR == null) {
+            String etat = request.getParameter("etat");
+            if (type == null || username == null || titre == null || auteur == null) {
                 // redirection, accesss frauduleux
                 request.setAttribute("message", "tantative frauduleuse");
-                request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
+                request.getRequestDispatcher("retourEmprunt.jsp").forward(request, response);
             }
             // test utilisateur
             Abonnee abonnee = abonneeFacade.find(username);
             if (abonnee == null) {
                 request.setAttribute("message", "L'abonnee n'existe pas");
-                request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
+                request.getRequestDispatcher("retourEmprunt.jsp").forward(request, response);
                 return;
             }
-            if(abonnee.getNombreRetard() >0){
-                request.setAttribute("message", "l'abonnee a des articles en retard");
-                request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
+            Collection<Media> medias = abonnee.getMediaCollection();
+            if (medias.isEmpty()) {
+                request.setAttribute("message", "L'abonnee n'a aucun pret en cours");
+                request.getRequestDispatcher("retourEmprunt.jsp").forward(request, response);
                 return;
             }
-            if(abonnee.getMediaCollection().size()>5){
-                request.setAttribute("message", "On ne peut pas emprunter plus de 5 Media");
-                request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-                return;
+            List<Film> films = new ArrayList<>();
+            List<Musique> musiques = new ArrayList<>();
+            List<Livre> livres = new ArrayList<>();
+            Film film;
+            Musique musique;
+            Livre livre;
+            for (Media m : medias) {
+                if (filmFacade.find(m.getMediaId()) != null) {
+                    films.add(filmFacade.find(m.getMediaId()));
+                }
+                if (musiqueFacade.find(m.getMediaId()) != null) {
+                    musiques.add(musiqueFacade.find(m.getMediaId()));
+                }
+                if (livreFacade.find(m.getMediaId()) != null) {
+                    livres.add(livreFacade.find(m.getMediaId()));
+                }
             }
+            film = new Film();
+            musique = new Musique();
+            livre = new Livre();
             switch (type) {
-                case "livre":
-                    Livre livre = livreFacade.findDispoByTitreAuteur(titre, auteur);
-                    if (livre == null) {
-                        request.setAttribute("message", "ce livre n'est plus disponible");
-                        request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-                        return;
-                    }
-                    dateRetour = simpleDateFormat.parse(sDateR);
-                    if(dateRetour.before(dateEmprunt)){
-                        request.setAttribute("message", "Date emprunt avant date retour");
-                        request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-                        return;
-                    }
-                    livre.setUserName(abonnee);
-                    livre.setEmprunt(1);
-                    livre.setDateDebut(dateEmprunt);
-                    livre.setDateFin(dateRetour);
-                    abonnee.getMediaCollection().add(livre);
-                    livreFacade.edit(livre);
-                    abonneeFacade.edit(abonnee);
-                    
-                    emprunt.setUserName(abonnee);
-                    emprunt.setMediaId(livre);
-                    emprunt.setDateDebut(dateEmprunt);
-                    emprunt.setDateFin(dateRetour);
-                    empruntFacade.create(emprunt);
-                    
-                    request.setAttribute("message", "emprunt pris en compte");
-                    request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-                    return;
                 case "film":
-                    Film film = filmFacade.findDispoByTitreRealisateur(titre, auteur);
+                    for (Film f : films) {
+                        if (f.getTitre().equals(titre) && f.getRealisateur().equals(auteur) && f.getEmprunt()==1) {
+                            film = f;
+                            break;
+                        }
+                    }
                     if (film == null) {
-                        request.setAttribute("message", "ce film n'est plus disponible");
+                        //
+                        request.setAttribute("message", "film non retrouvé parmi ceux de l'abonnee");
                         request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
                         return;
                     }
-                    dateRetour = simpleDateFormat.parse(sDateR);
-                    if (dateRetour.before(dateEmprunt)) {
-                        request.setAttribute("message", "Date emprunt avant date retour");
-                        request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-                        return;
-                    }
-                    film.setUserName(abonnee);
-                    film.setEmprunt(1);
-                    film.setDateDebut(dateEmprunt);
-                    film.setDateFin(dateRetour);
-                    abonnee.getMediaCollection().add(film);
+                    emprunt = empruntFacade.findByAllInfo(username, film.getMediaId(), film.getDateDebut(), film.getDateFin());
+                    film.setUserName(null);
+                    film.setEmprunt(0);
+                    film.setDateDebut(null);
+                    film.setDateFin(null);
+                    film.setEtat(etat);
+                    emprunt.setDateRetour(dateRetour);
+                    abonnee.getMediaCollection().remove((Media) film);
+                    empruntFacade.edit(emprunt);
                     filmFacade.edit(film);
                     abonneeFacade.edit(abonnee);
-                    
-                    emprunt.setUserName(abonnee);
-                    emprunt.setMediaId(film);
-                    emprunt.setDateDebut(dateEmprunt);
-                    emprunt.setDateFin(dateRetour);
-                    empruntFacade.create(emprunt);
-                    
-                    request.setAttribute("message", "emprunt pris en compte");
+                    request.setAttribute("message", "retour pris en compte");
                     request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
                     return;
-                case "musique":
-                    Musique musique = musiqueFacade.findDispoByTitreArtiste(titre, auteur);
+                    
+                    case "musique":
+                    for (Musique m : musiques) {
+                        if (m.getTitre().equals(titre) && m.getArtiste().equals(auteur) && m.getEmprunt() == 1) {
+                            musique = m;
+                            break;
+                        }
+                    }
                     if (musique == null) {
-                        request.setAttribute("message", "cet album n'est plus disponible");
+                        //
+                        request.setAttribute("message", "musique non retrouvé parmi ceux de l'abonnee");
                         request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
                         return;
                     }
-                    dateRetour = simpleDateFormat.parse(sDateR);
-                    if (dateRetour.before(dateEmprunt)) {
-                        request.setAttribute("message", "Date emprunt avant date retour");
-                        request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-                        return;
-                    }
-                    musique.setUserName(abonnee);
-                    musique.setEmprunt(1);
-                    musique.setDateDebut(dateEmprunt);
-                    musique.setDateFin(dateRetour);
-                    abonnee.getMediaCollection().add(musique);
+                    emprunt = empruntFacade.findByAllInfo(username, musique.getMediaId(), musique.getDateDebut(), musique.getDateFin());
+                    musique.setUserName(null);
+                    musique.setEmprunt(0);
+                    musique.setDateDebut(null);
+                    musique.setDateFin(null);
+                    musique.setEtat(etat);
+                    emprunt.setDateRetour(dateRetour);
+                    abonnee.getMediaCollection().remove((Media) musique);
+                    empruntFacade.edit(emprunt);
                     musiqueFacade.edit(musique);
                     abonneeFacade.edit(abonnee);
+                    request.setAttribute("message", "retour pris en compte");
+                    request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
+                    return;
                     
-                    emprunt.setUserName(abonnee);
-                    emprunt.setMediaId(musique);
-                    emprunt.setDateDebut(dateEmprunt);
-                    emprunt.setDateFin(dateRetour);
-                    empruntFacade.create(emprunt);
-                    
-                    request.setAttribute("message", "emprunt pris en compte");
+                    case "livre":
+                    for (Livre l : livres) {
+                        if (l.getTitre().equals(titre) && l.getAuteur().equals(auteur) && l.getEmprunt() == 1) {
+                            livre = l;
+                            break;
+                        }
+                    }
+                    if (livre == null) {
+                        request.setAttribute("message", "livre non retrouvé parmi ceux de l'abonnee");
+                        request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
+                        return;
+                    }
+                    emprunt = empruntFacade.findByAllInfo(username, livre.getMediaId(), livre.getDateDebut(), livre.getDateFin());
+                    livre.setUserName(null);
+                    livre.setEmprunt(0);
+                    livre.setDateDebut(null);
+                    livre.setDateFin(null);
+                    livre.setEtat(etat);
+                    emprunt.setDateRetour(dateRetour);
+                    abonnee.getMediaCollection().remove((Media) livre);
+                    empruntFacade.edit(emprunt);
+                    livreFacade.edit(livre);
+                    abonneeFacade.edit(abonnee);
+                    request.setAttribute("message", "retour pris en compte");
                     request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
                     return;
                 default:
-                    request.setAttribute("message", "type de media inconnu");
+                    request.setAttribute("message", "erreur inconnué");
                     request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-                    return;
             }
         } catch (ParseException ex) {
             request.setAttribute("message", "Format de date inconnu. Bon format: yyyy-mm-dd");
             request.getRequestDispatcher("enregistrerEmprunt.jsp").forward(request, response);
-            return;
         }
 
     }
@@ -207,7 +217,6 @@ public class EnregistrerEmprunt extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
@@ -222,7 +231,6 @@ public class EnregistrerEmprunt extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**

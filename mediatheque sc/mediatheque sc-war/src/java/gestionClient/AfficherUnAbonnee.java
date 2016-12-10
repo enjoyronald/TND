@@ -3,17 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gestionMedia;
+package gestionClient;
 
+import enitite.Abonnee;
 import enitite.Film;
 import enitite.Livre;
+import enitite.Media;
 import enitite.Musique;
+import facades.AbonneeFacadeLocal;
 import facades.FilmFacadeLocal;
 import facades.LivreFacadeLocal;
-import facades.MediaFacadeLocal;
 import facades.MusiqueFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -26,16 +29,19 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
  *
  * @author enjoy
  */
-public class AfficherUnMedia extends HttpServlet {
+public class AfficherUnAbonnee extends HttpServlet {
 
     @EJB
-    private FilmFacadeLocal filmFacade;
+    private MusiqueFacadeLocal musiqueFacade;
 
     @EJB
     private LivreFacadeLocal livreFacade;
 
     @EJB
-    private MusiqueFacadeLocal musiqueFacade;
+    private FilmFacadeLocal filmFacade;
+
+    @EJB
+    private AbonneeFacadeLocal abonneeFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,43 +55,44 @@ public class AfficherUnMedia extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String sId = request.getParameter("mediaId");
-        if (sId == null) {
+        String abonneeId = request.getParameter("aId");
+        if (abonneeId == null) {
             // générer une erreur due au mauvai argument
             response.sendError(SC_NOT_FOUND);
             return;
         }
-        int mediaId = new Integer(sId);
-        Film film = filmFacade.find(mediaId);
-        Musique musique = musiqueFacade.find(mediaId);
-        Livre livre = livreFacade.find(mediaId);
-        if (film == null && musique == null && livre == null) {
-            // on redirige vers la page d'acceuil, on envoie un ressource not found
+        Abonnee abonnee = abonneeFacade.find(abonneeId);
+        if (abonnee == null) {
             response.sendError(SC_NOT_FOUND);
+            //response.sendRedirect("index.jsp");
             return;
         }
-        if (film != null) {
-            request.setAttribute("type", "film");
-            request.setAttribute("film", film); // on recupère tous les pret en cours pour l'admin
-            List<Film> films = filmFacade.findAllCopyFilm(film.getTitre(), film.getRealisateur());
-            request.setAttribute("copies", films);
-            request.getRequestDispatcher("afficherUnMedia.jsp").forward(request, response);
-            return;
-        } else if (livre != null) {
-            request.setAttribute("type", "livre");
-            request.setAttribute("livre", livre);
-            List<Livre> livres = livreFacade.findAllCopyLivre(livre.getTitre(), livre.getAuteur());
-            request.setAttribute("copies", livres);
-            request.getRequestDispatcher("afficherUnMedia.jsp").forward(request, response);
-            return;
-        } else if (musique != null) {
-            request.setAttribute("type", "musique");
-            request.setAttribute("musique", musique);
-            List<Musique> musiques = musiqueFacade.findAllCopyMusique(musique.getTitre(), musique.getArtiste());
-            request.setAttribute("copies", musiques);
-            request.getRequestDispatcher("afficherUnMedia.jsp").forward(request, response);
-            return;
+        List<Film> films = new ArrayList<>();
+        List<Musique> musiques = new ArrayList<Musique>();
+        List<Livre> livres = new ArrayList<Livre>();
+        Film film;
+        Livre livre;
+        Musique musique;
+        for (Media media : abonnee.getMediaCollection()) {
+            film = filmFacade.find(media.getMediaId());
+            livre = livreFacade.find(media.getMediaId());
+            musique = musiqueFacade.find(media.getMediaId());
+            if (film != null) {
+                films.add(film);
+            }
+            if (livre != null) {
+                livres.add(livre);
+            }
+            if (musique != null) {
+                musiques.add(musique);
+            }
         }
+        request.setAttribute("abonnee", abonnee);
+        request.setAttribute("films", films);
+        request.setAttribute("livres", livres);
+        request.setAttribute("musiques", musiques);
+        request.getRequestDispatcher("afficherUnAbonnee.jsp").forward(request, response);
+        return;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

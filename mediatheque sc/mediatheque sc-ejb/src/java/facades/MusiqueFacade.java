@@ -68,6 +68,17 @@ public class MusiqueFacade extends AbstractFacade<Musique> implements MusiqueFac
         }
     }
     
+    @Override
+    public List<Musique> findAllCopyMusique(String titre, String artiste) {
+        String jpql = "SELECT musique From Musique musique WHERE musique.titre='" + titre + "' and musique.artiste ='" + artiste + "'";
+        Query query = em.createQuery(jpql);
+        try {
+            return query.getResultList();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    
     /**
      *
      * @return
@@ -100,6 +111,59 @@ public class MusiqueFacade extends AbstractFacade<Musique> implements MusiqueFac
 
         }
         return musiques;
+    }
+    
+    @Override
+    public List<Musique> findByTitre(String titre) {
+        String sql = "SELECT DISTINCT artiste,titre \n"
+                + "    FROM MUSIQUE as f NATURAL JOIN MEDIA as m\n"
+                + "    WHERE titre= '"+titre+"' "
+                + "";
 
+        String jpql = "SELECT livre From Livre livre";
+        // on va envoyer une map film, count
+
+        Query query = em.createNativeQuery(sql);
+        String artiste = "";
+
+        List<Object[]> autTitre = query.getResultList();
+        List<Musique> musiques = new ArrayList<>();
+        if (autTitre == null) {
+            return null; // il y a pas de livre dans la bd
+        }
+        for (Object o[] : autTitre) {
+            artiste = (String) o[0];
+            titre = (String) o[1];
+            musiques.add(findByTitreArtiste(titre, artiste));
+
+        }
+        return musiques;
+    }
+    
+    @Override
+    public List<Musique> findByArtiste(String artiste) {
+        String sql = "SELECT DISTINCT artiste,titre \n"
+                + "    FROM MUSIQUE as f NATURAL JOIN MEDIA as m\n"
+                + "    WHERE artiste ='"+artiste+"' "
+                + "";
+
+        String jpql = "SELECT livre From Livre livre";
+        // on va envoyer une map film, count
+
+        Query query = em.createNativeQuery(sql);
+        String titre = "";
+
+        List<Object[]> autTitre = query.getResultList();
+        List<Musique> musiques = new ArrayList<>();
+        if (autTitre == null) {
+            return null; // il y a pas de livre dans la bd
+        }
+        for (Object o[] : autTitre) {
+            artiste = (String) o[0];
+            titre = (String) o[1];
+            musiques.add(findByTitreArtiste(titre, artiste));
+
+        }
+        return musiques;
     }
 }

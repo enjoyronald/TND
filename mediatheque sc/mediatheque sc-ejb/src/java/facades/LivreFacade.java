@@ -64,21 +64,28 @@ public class LivreFacade extends AbstractFacade<Livre> implements LivreFacadeLoc
             return null;
         }
     }
+    
+    @Override
+    public List<Livre> findAllCopyLivre(String titre, String auteur) {
+        String jpql = "SELECT livre From Livre livre WHERE livre.titre='" + titre + "' and livre.auteur ='" + auteur + "'";
+        Query query = em.createQuery(jpql);
+        try {
+            return query.getResultList();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    
     /**
      *
      * @return
      */
     @Override
     public List<Livre> findDistinctLivre() {
-        //String jpql = "SELECT film From Film film,(SELECT DISTINCT(film.titre,film.realisateur) film.mediaId from Film film) film2 "
-        //       + " WHERE film.mediaId = film2.mediaId";
         String sql = "SELECT DISTINCT auteur,titre \n"
                 + "    FROM LIVRE as f NATURAL JOIN MEDIA as m\n"
                 + "    WHERE auteur is not null "
                 + "";
-
-        String jpql = "SELECT livre From Livre livre";
-        // on va envoyer une map film, count
 
         Query query = em.createNativeQuery(sql);
         String auteur = "";
@@ -96,7 +103,53 @@ public class LivreFacade extends AbstractFacade<Livre> implements LivreFacadeLoc
 
         }
         return livres;
-
     }
 
+    @Override
+    public List<Livre> findByTitre(String titre) {
+        String sql = "SELECT DISTINCT auteur,titre \n"
+                + "    FROM LIVRE as f NATURAL JOIN MEDIA as m\n"
+                + "    WHERE titre= '"+titre+"' "
+                + "";
+
+        Query query = em.createNativeQuery(sql);
+        String auteur = "";
+
+        List<Object[]> autTitre = query.getResultList();
+        List<Livre> livres = new ArrayList<>();
+        if (autTitre == null) {
+            return null; // il y a pas de livre dans la bd
+        }
+        for (Object o[] : autTitre) {
+            auteur = (String) o[0];
+            titre = (String) o[1];
+            livres.add(findByTitreAuteur(titre, auteur));
+
+        }
+        return livres;
+    }
+    
+    @Override
+    public List<Livre> findByAuteur(String auteur) {
+        String sql = "SELECT DISTINCT auteur,titre \n"
+                + "    FROM LIVRE as f NATURAL JOIN MEDIA as m\n"
+                + "    WHERE auteur = '"+auteur+"' "
+                + "";
+
+        Query query = em.createNativeQuery(sql);
+        String titre = "";
+
+        List<Object[]> autTitre = query.getResultList();
+        List<Livre> livres = new ArrayList<>();
+        if (autTitre == null) {
+            return null; // il y a pas de livre dans la bd
+        }
+        for (Object o[] : autTitre) {
+            auteur = (String) o[0];
+            titre = (String) o[1];
+            livres.add(findByTitreAuteur(titre, auteur));
+
+        }
+        return livres;
+    }
 }

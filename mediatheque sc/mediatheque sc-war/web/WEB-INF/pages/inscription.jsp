@@ -43,7 +43,7 @@
             <label for="tel" class="control-label">Tel</label>
         </div>
         <div class="col-sm-10">
-            <input type="number" class="form-control" id="tel" name="tel" placeholder="0110203040" min="999999999" max="9999999999" required>
+            <input type="number" class="form-control" id="tel" name="tel" placeholder="0110203040" required>
         </div>
     </div>
     <div class="form-group">

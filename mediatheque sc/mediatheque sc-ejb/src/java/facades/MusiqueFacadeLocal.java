@@ -36,4 +36,9 @@ public interface MusiqueFacadeLocal {
     
     public Musique findDispoByTitreArtiste(String titre, String artiste);
     
+    public List<Musique> findAllCopyMusique(String titre, String artiste);
+    
+    public List<Musique> findByTitre(String titre);
+    
+    public List<Musique> findByArtiste(String artiste);
 }

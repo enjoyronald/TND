@@ -40,6 +40,22 @@
         <servlet-name>EnregistrerEmprunt</servlet-name>
         <servlet-class>gestionEmprunt.EnregistrerEmprunt</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AfficherUnAbonnee</servlet-name>
+        <servlet-class>gestionClient.AfficherUnAbonnee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Recherche</servlet-name>
+        <servlet-class>recherche.Recherche</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetourEmprunt</servlet-name>
+        <servlet-class>gestionEmprunt.RetourEmprunt</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditerMedia</servlet-name>
+        <servlet-class>gestionMedia.EditerMedia</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AjoutLivre</servlet-name>
         <url-pattern>/AjoutLivre</url-pattern>
@@ -79,6 +95,22 @@
     <servlet-mapping>
         <servlet-name>EnregistrerEmprunt</servlet-name>
         <url-pattern>/EnregistrerEmprunt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AfficherUnAbonnee</servlet-name>
+        <url-pattern>/AfficherUnAbonnee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Recherche</servlet-name>
+        <url-pattern>/Recherche</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetourEmprunt</servlet-name>
+        <url-pattern>/RetourEmprunt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditerMedia</servlet-name>
+        <url-pattern>/EditerMedia</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

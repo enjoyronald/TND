@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="titre" placeholder="<c:out value="${titre}"/>"
-                                   readonly="" value="<c:out value="${titre}"/>" name="titre">
+                                   readonly value="${titre}" name="titre">
                         </div>
                     </div>
                     <div class="form-group">
