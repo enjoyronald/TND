@@ -8,6 +8,12 @@
 <c:set var="musiques_size" value="${requestScope.musiques_size}" />
 <c:set var="livres_size" value="${requestScope.livres_size}" />
 <c:set var="context" value="${pageContext.request.contextPath}" />
+
+<fieldset>
+    <legend align="center">
+        <h1>Liste des Médias </h1>
+    </legend>
+</fieldset>
 <div class="col-md-12">
     <fieldset>
         <legend>Films</legend>

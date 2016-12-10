@@ -9,31 +9,30 @@
         <link href="${pageContext.request.contextPath}/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.request.contextPath}/jquery.dataTables.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/bootstrap.min.js" type="text/javascript"></script>
-        <!--
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
-        -->
+
     </head>
-    <body> 
-        <header>
+    <body style ='background-color: #eeeeee;'> 
+        
             <jsp:include page="/WEB-INF/pages/header.jsp"></jsp:include>
-            </header>
-            <div class="section">
+            
+            
                 <div class="container">
-                    <div class="row">
+                    <div class="row" style ='background-color: #ffffff;'>
+                        <p>&nbsp; &nbsp;&nbsp; &nbsp;</p>
+                        <p>&nbsp; &nbsp;&nbsp; &nbsp;</p>
+                        <p>&nbsp; &nbsp;&nbsp; &nbsp;</p>
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
                         <jsp:include page="/WEB-INF/${param.main}.jsp?${param.parametres}"></jsp:include>
+                        <p>&nbsp; &nbsp;&nbsp; &nbsp;</p>
+                        <p>&nbsp; &nbsp;&nbsp; &nbsp;</p>
+                        <p>&nbsp; &nbsp;&nbsp; &nbsp;</p>
                         </div>
                         <div class="col-md-2"></div>
                     </div>
                 </div>
-            </div>
-            <footer>
             <jsp:include page="/WEB-INF/pages/footer.jsp"></jsp:include>
-        </footer>
+        
 
     </body>
 </html>

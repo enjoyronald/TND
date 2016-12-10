@@ -1,5 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div class="navbar navbar-default navbar-static-top">
+
+<div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
@@ -18,10 +19,10 @@
                 </li>
                 <c:if test="${sessionScope.connected == null}" >
                     <li>
-                        <a href="inscription.jsp">inscription</a>
+                        <a href="inscription.jsp">Inscription</a>
                     </li>
                     <li>
-                        <a href="connexion.jsp">connexion</a>
+                        <a href="connexion.jsp">Connexion</a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.connected != null}" > <!-- Pour voir si l'utilisateur est connecté. En suite type d'uilisateur -->
@@ -30,10 +31,11 @@
                     <c:if test="${userType == 'admin'}"> <!-- c'est un administrateur -->
                         <c:set var="admin" value="${sessionScope.client}" />
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">administrer <b class="caret"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Administrer <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="ajouterMedia.jsp">Ajouter Media</a></li>
-                                <li><a href="afficherAbonnees.jsp">afficher abonnees</a></li>
+                                <li><a href="afficherAbonnees.jsp">Afficher Abonnees</a></li>
+                                <li><a href="afficherEmprunts.jsp">Afficher Emprunts</a></li>
                                 <li><a href="enregistrerEmprunt.jsp">Enregistrer Emprunt</a></li>
                                 <li><a href="retourEmprunt.jsp">Retour Emprunt</a></li>
                             </ul> 
@@ -45,11 +47,12 @@
                             </ul>
                         </li>
                     </c:if>
-                    <c:if test="${userType == 'abonnee'}"> <!-- c'est un administrateur -->
+                    <c:if test="${userType == 'abonnee'}"> <!-- c'est un abonnee -->
                         <c:set var="abonnee" value="${sessionScope.client}" />
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#"><c:out value="${abonnee.getUserName()}"/> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <li><a href="${context}/AfficherUnAbonnee?aId=${abonnee.getUserName()}">profil</a></li>
                                 <li><a href="${context}/Deconnexion">deconnexion</a></li>
                             </ul>
                         </li>

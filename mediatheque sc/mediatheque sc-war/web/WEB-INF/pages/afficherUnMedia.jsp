@@ -13,9 +13,11 @@
                 <legend>
                     <h1>
                         ${livre.getTitre()}
-                        <a href="EditerMedia?type=livre&titre=${livre.getTitre()}&auteur=${livre.getAuteur()}"><button type="button" class="btn btn-warning" aria-label="Left Align">
-                                editer
-                            </button></a>
+                        <c:if test="${userType == 'admin'}">
+                            <a href="EditerMedia?type=livre&titre=${livre.getTitre()}&auteur=${livre.getAuteur()}"><button type="button" class="btn btn-warning" aria-label="Left Align">
+                                    editer
+                                </button></a>
+                            </c:if>
                     </h1>
                 </legend>
                 <div class="col-md-12"><h3>
@@ -88,9 +90,11 @@
         <div>
             <fieldset>
                 <legend><h1><c:out value="${musique.getTitre()}" />
-                        <a href="EditerMedia?type=musique&titre=${musique.getTitre()}&auteur=${musique.getArtiste()}"><button type="button" class="btn btn-warning" aria-label="Left Align">
-                                editer
-                            </button></a>
+                        <c:if test="${userType == 'admin'}">
+                            <a href="EditerMedia?type=musique&titre=${musique.getTitre()}&auteur=${musique.getArtiste()}"><button type="button" class="btn btn-warning" aria-label="Left Align">
+                                    editer
+                                </button></a>
+                            </c:if>
                     </h1></legend>
                 <div class="col-md-12"><h3>
                         <div class="col-md-4">Artiste :</div>
@@ -162,9 +166,11 @@
         <div>
             <fieldset>
                 <legend><h1><c:out value="${film.getTitre()}" />
-                        <a href="EditerMedia?type=film&titre=${film.getTitre()}&auteur=${film.getRealisateur()}"><button type="button" class="btn btn-warning" aria-label="Left Align">
-                                editer
-                            </button></a>
+                        <c:if test="${userType == 'admin'}">
+                            <a href="EditerMedia?type=film&titre=${film.getTitre()}&auteur=${film.getRealisateur()}"><button type="button" class="btn btn-warning" aria-label="Left Align">
+                                    editer
+                                </button></a>
+                            </c:if>
                     </h1></legend>
                 <div class="col-md-12"><h3>
                         <div class="col-md-4">Réalisateur :</div>
@@ -224,12 +230,14 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="copie" items="${copies}" varStatus="loop">
+                                            <c:if test="${copie.getUserName().getUserName() != null }">
                                             <tr>
                                                 <td><a href="AfficherUnAbonnee?aId=${copie.getUserName().getUserName()}">${copie.getUserName().getUserName()}</a></td>
                                                 <td>${copie.getUserName().getEmai()}</td>
                                                 <td>${copie.getDateDebut()}</td>
                                                 <td>${copie.getDateFin()}</td>
                                             </tr>
+                                            </c:if>
                                         </c:forEach>
                                     </tbody>
                                 </table>

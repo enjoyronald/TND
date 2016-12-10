@@ -5,6 +5,11 @@
         <c:out value="${message}"/> 
     </div>
 </c:if>
+<fieldset>
+    <legend align="center">
+        <h1>Inscription</h1>
+    </legend>
+</fieldset>
 <form class="form-horizontal" role="form" method="POST" action="inscription_connexion">
     <div class="form-group">
         <div class="col-sm-2">

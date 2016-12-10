@@ -8,7 +8,8 @@
 </c:if>
 
 <jsp:include page="/WEB-INF/pages/template.jsp">
-    <jsp:param name="title" value="Editer Media"/>
-    <jsp:param name="main" value="pages/editerMedia"/>
+    <jsp:param name="title" value="Afficher Emprunts"/>
+    <jsp:param name="main" value="pages/afficherEmprunts"/>
     <jsp:param name="parametres" value="test"/>
 </jsp:include>
+

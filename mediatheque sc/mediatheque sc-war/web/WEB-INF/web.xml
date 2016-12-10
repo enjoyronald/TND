@@ -56,6 +56,10 @@
         <servlet-name>EditerMedia</servlet-name>
         <servlet-class>gestionMedia.EditerMedia</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListEmprunt</servlet-name>
+        <servlet-class>gestionEmprunt.ListEmprunt</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AjoutLivre</servlet-name>
         <url-pattern>/AjoutLivre</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>EditerMedia</servlet-name>
         <url-pattern>/EditerMedia</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListEmprunt</servlet-name>
+        <url-pattern>/ListEmprunt</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
