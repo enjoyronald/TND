@@ -4,7 +4,11 @@
 <c:if test="${type}==null">
     <c:redirect  url="index.jsp"/>
 </c:if>
-
+<fieldset>
+    <legend align="center">
+        <h1>Ajouter Nouveau Media </h1>
+    </legend>
+</fieldset>
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">

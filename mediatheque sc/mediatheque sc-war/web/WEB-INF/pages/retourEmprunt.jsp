@@ -3,7 +3,11 @@
 <c:if test="${not empty message}">
     <c:out value="${message}"/> 
 </c:if>
-
+<fieldset>
+    <legend align="center">
+        <h1>Retour Emprunt </h1>
+    </legend>
+</fieldset>
 <form class="form-horizontal" role="form" method="POST" action="RetourEmprunt">
     <div class="form-group">
         <div class="col-sm-2">
@@ -41,15 +45,19 @@
             </select>
         </div>
     </div>
-    <div class="col-md-10">
-        <select name="etat" class="col-md-12 form-control" id="etat">
-            <option value="NEUF">NEUF</option>
-            <option value="BIEN">BIEN</option>
-            <option value="USAGER">USAGER</option>
-            <option value="JETER">JETER</option>
-        </select>
+    <div class="form-group">
+        <div class="col-md-2">
+            <label for="type" class="control-label">Etat</label>
+        </div>
+        <div class="col-md-10">
+            <select name="etat" class="col-md-12 form-control" id="etat">
+                <option value="NEUF">NEUF</option>
+                <option value="BIEN">BIEN</option>
+                <option value="USAGER">USAGER</option>
+                <option value="JETER">JETER</option>
+            </select>
+        </div>
     </div>
-
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default">retour</button>

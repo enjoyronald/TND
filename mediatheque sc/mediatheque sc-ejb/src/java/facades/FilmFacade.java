@@ -35,7 +35,7 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
     @Override
     public Film findByTitreRealisateur(String titre, String realisateur) {
         String sql = "SELECT film.";
-        String jpql = "SELECT film From Film film WHERE film.titre='" + titre + "' and film.realisateur ='" + realisateur + "'";
+        String jpql = "SELECT film From Film film WHERE upper(film.titre)=upper('" + titre + "') and upper(film.realisateur) =upper('" + realisateur + "')";
         Query query = em.createQuery(jpql);
         try {
             List<Film> films = query.getResultList();
@@ -51,7 +51,7 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
     @Override
     public Film findDispoByTitreRealisateur(String titre, String realisateur) {
         String sql = "SELECT film.";
-        String jpql = "SELECT film From Film film WHERE film.titre='" + titre + "' and film.realisateur ='" + realisateur + "'";
+        String jpql = "SELECT film From Film film WHERE upper(film.titre)=upper('" + titre + "') and upper(film.realisateur) =upper('" + realisateur + "')";
         Query query = em.createQuery(jpql);
         try {
             List<Film> films = query.getResultList();
@@ -71,7 +71,7 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
 
     @Override
     public List<Film> findAllCopyFilm(String titre, String realisateur) {
-        String jpql = "SELECT film From Film film WHERE film.titre='" + titre + "' and film.realisateur ='" + realisateur + "'";
+        String jpql = "SELECT film From Film film WHERE upper(film.titre)=upper('" + titre + "') and upper(film.realisateur) =upper('" + realisateur + "')";
         Query query = em.createQuery(jpql);
         try {
             return query.getResultList();
@@ -118,7 +118,7 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
     public List<Film> findByTitre(String titre) {
         String sql = "SELECT DISTINCT realisateur,titre \n"
                 + "    FROM FILM as f NATURAL JOIN MEDIA as m\n"
-                + "    WHERE titre='"+titre+"' "
+                + "    WHERE upper(titre)=upper('"+titre+"') "
                 + "";
 
         Query query = em.createNativeQuery(sql);
@@ -142,7 +142,7 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
     public List<Film> findByRealisateur(String realisateur) {
         String sql = "SELECT DISTINCT realisateur,titre \n"
                 + "    FROM FILM as f NATURAL JOIN MEDIA as m\n"
-                + "    WHERE realisateur ='"+realisateur+"' "
+                + "    WHERE upper(realisateur) = upper('"+realisateur+"') "
                 + "";
 
         Query query = em.createNativeQuery(sql);
@@ -168,7 +168,7 @@ public class FilmFacade extends AbstractFacade<Film> implements FilmFacadeLocal 
                 + "    WHERE f.media_id= m.media_id"
                 + "    and fa.film_id = f.media_id"
                 + "    and fa.nom_acteur=a.nom_acteur"
-                + "    and a.nom_acteur ='" + acteur + "' "
+                + "    and upper(a.nom_acteur) = upper('" + acteur + "') "
                 + "";
         Query query = em.createNativeQuery(sql);
         String realisateur = "";

@@ -4,7 +4,11 @@
 <c:set var="films" value="${requestScope.films}" />
 <c:set var="musiques" value="${requestScope.musiques}" />
 <c:set var="livres" value="${requestScope.livres}" />
-
+<fieldset>
+    <legend align="center">
+        <h1>Resultat Recherche </h1>
+    </legend>
+</fieldset>
 <div class="col-md-12">
     <c:choose>
         <c:when test="${type == 'film'}">

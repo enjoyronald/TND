@@ -1,5 +1,9 @@
 <!-- Zone selection type media-->
-
+<fieldset>
+    <legend align="center">
+        <h1>Ajouter Un Media</h1>
+    </legend>
+</fieldset>
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-pills">

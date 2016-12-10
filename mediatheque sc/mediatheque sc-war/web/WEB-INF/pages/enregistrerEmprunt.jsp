@@ -9,6 +9,11 @@
     webshims.polyfill('forms forms-ext');
 </script>
 
+<fieldset>
+    <legend align="center">
+        <h1> Enregistrer Emprunt </h1>
+    </legend>
+</fieldset>
 <form class="form-horizontal" role="form" method="POST" action="EnregistrerEmprunt">
     <div class="form-group">
         <div class="col-sm-2">
