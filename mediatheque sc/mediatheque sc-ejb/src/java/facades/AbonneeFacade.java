@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author enjoy
+ * @author ronald & baptiste
  */
 @Stateless
 public class AbonneeFacade extends AbstractFacade<Abonnee> implements AbonneeFacadeLocal {

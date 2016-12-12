@@ -1,3 +1,1 @@
-<p>
-    Bienvenue sur l'app de gestion des pizzas
-</p>
+ <img src="atelier1.jpg" class="img-responsive"/>
