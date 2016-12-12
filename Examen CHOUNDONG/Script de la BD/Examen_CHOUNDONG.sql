@@ -24,11 +24,6 @@ create table question(
 	FOREIGN key (categorie) references categorie(nom)
 );
 
-create table reponse(
-	id integer primary key,
-	contenu varchar(255),
-	foreign key (id) references question(id)
-);
 
 create table page(
 	nom varchar(100) primary key,

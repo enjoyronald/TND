@@ -12,6 +12,18 @@
         <servlet-name>AjoutCategorie</servlet-name>
         <servlet-class>gestionCategories.AjoutCategorie</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AjoutQuestion</servlet-name>
+        <servlet-class>gestionQuestion.AjoutQuestion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListQuestions</servlet-name>
+        <servlet-class>gestionQuestion.ListQuestions</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AfficherUneQuestion</servlet-name>
+        <servlet-class>gestionQuestion.AfficherUneQuestion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Main</servlet-name>
         <url-pattern>/Main</url-pattern>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>AjoutCategorie</servlet-name>
         <url-pattern>/AjoutCategorie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjoutQuestion</servlet-name>
+        <url-pattern>/AjoutQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListQuestions</servlet-name>
+        <url-pattern>/ListQuestions</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AfficherUneQuestion</servlet-name>
+        <url-pattern>/AfficherUneQuestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

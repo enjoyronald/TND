@@ -23,7 +23,7 @@
             <label for="sCategories" class="control-label">Categorie(s) liée(s)</label>
         </div>
         <div class="col-md-10">
-            <select multiple name="sCategories">
+            <select multiple name="sCategories" class="form-control">
                <c:forEach var="categorie" items="${categories}" varStatus="loop">
                    <option value="${categorie.getNom()}">${categorie.getNom()}</option>
                 </c:forEach>

@@ -44,14 +44,13 @@ public class Question implements Serializable {
     @Size(max = 100)
     @Column(name = "NOM")
     private String nom;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "question")
-    private Reponse reponse;
+    
+    @Size(max = 255)
+    @Column(name = "REPONSE")
+    private String reponse;
     @JoinColumn(name = "CATEGORIE", referencedColumnName = "NOM")
     @ManyToOne
     private Categorie categorie;
-    @JoinColumn(name = "USER_NAME", referencedColumnName = "USER_NAME")
-    @ManyToOne
-    private Gestionnaire userName;
 
     public Question() {
     }
@@ -76,13 +75,14 @@ public class Question implements Serializable {
         this.nom = nom;
     }
 
-    public Reponse getReponse() {
+    public String getReponse() {
         return reponse;
     }
 
-    public void setReponse(Reponse reponse) {
+    public void setReponse(String reponse) {
         this.reponse = reponse;
     }
+
 
     public Categorie getCategorie() {
         return categorie;
@@ -92,13 +92,6 @@ public class Question implements Serializable {
         this.categorie = categorie;
     }
 
-    public Gestionnaire getUserName() {
-        return userName;
-    }
-
-    public void setUserName(Gestionnaire userName) {
-        this.userName = userName;
-    }
 
     @Override
     public int hashCode() {

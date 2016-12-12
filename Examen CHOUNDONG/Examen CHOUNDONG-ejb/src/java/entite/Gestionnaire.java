@@ -43,8 +43,6 @@ public class Gestionnaire implements Serializable {
     @Size(max = 100)
     @Column(name = "MDP")
     private String mdp;
-    @OneToMany(mappedBy = "userName")
-    private Collection<Question> questionCollection;
 
     public Gestionnaire() {
     }
@@ -69,14 +67,7 @@ public class Gestionnaire implements Serializable {
         this.mdp = mdp;
     }
 
-    @XmlTransient
-    public Collection<Question> getQuestionCollection() {
-        return questionCollection;
-    }
 
-    public void setQuestionCollection(Collection<Question> questionCollection) {
-        this.questionCollection = questionCollection;
-    }
 
     @Override
     public int hashCode() {
